@@ -1,3 +1,922 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    background-color: skyblue;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main.container {
+    flex: 1;
+    width: 100%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 20px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+.flash {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.flash-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.flash-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.site-header {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 1rem 5%;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.nav-logo a {
+    color: #ffffff;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.logo-icon {
+    margin-right: 8px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-link {
+    color: #cccccc;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #ffffff;
+}
+
+.btn-register {
+    background-color: #e63946;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.btn-register:hover {
+    background-color: #f1faee;
+    color: #1a1a1a;
+}
+
+.admin-tag {
+    color: #ffb703 !important;
+    border: 1px solid #ffb703;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.logout-link {
+    color: #999;
+    font-size: 0.9rem;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.concert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 3rem;
+}
+
+.concert-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.concert-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.card-image {
+    position: relative;
+    height: 200px;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.genre-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(230, 57, 70, 0.9);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.artist-name {
+    color: #e63946;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.concert-title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: #1a1a1a;
+}
+
+.concert-info {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-card {
+    display: block;
+    text-align: center;
+    background: #1a1a1a;
+    color: #fff;
+    padding: 0.8rem;
+    border-radius: 6px;
+    margin-top: auto;
+    transition: background 0.3s;
+}
+
+.btn-card:hover {
+    background: #333;
+}
+
+.concert-detail-container {
+    display: flex;
+    gap: 40px;
+    margin-top: 2rem;
+    align-items: flex-start;
+}
+
+.concert-main {
+    flex: 2;
+}
+
+.artist-sidebar {
+    flex: 1;
+    position: sticky;
+    top: 100px;
+}
+
+.concert-hero {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.main-poster {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+}
+
+.concert-header-info {
+    padding: 2rem;
+    background: white;
+}
+
+.concert-header-info h1 {
+    font-size: 2.5rem;
+    margin: 0.5rem 0;
+    color: #1a1a1a;
+}
+
+.artist-card-mini {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.artist-photo-container {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #e63946;
+}
+
+.artist-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.artist-details h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.artist-bio-short {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+}
+
+.btn-primary-large {
+    width: 100%;
+    background: #e63946;
+    color: white;
+    border: none;
+    padding: 1.2rem;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-primary-large:hover {
+    transform: scale(1.02);
+}
+
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    color: #666;
+}
+
+.btn-disabled {
+    width: 100%;
+    background: #ccc;
+    color: #888;
+    border: 1px solid #bbb;
+    padding: 1.2rem;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: not-allowed;
+    text-decoration: line-through;
+    margin-bottom: 0.5rem;
+}
+
+.coming-soon-text {
+    font-size: 0.8rem;
+    color: #e63946;
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+}
+
+.form-container, .auth-card {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #fafafa;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #1a1a1a;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+    outline: none;
+}
+
+.btn-auth, .btn-primary {
+    display: block;
+    width: fit-content;
+    min-width: 200px;
+    margin: 1.5rem auto 0;
+    padding: 12px 30px;
+    background-color: #1a1a1a;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn-auth:hover, .btn-primary:hover {
+    background-color: #333;
+}
+
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.auth-footer a {
+    color: #e63946;
+    font-weight: bold;
+}
+
+.dashboard-header {
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 1rem;
+}
+
+.dashboard-header span {
+    color: #e63946;
+}
+
+.user-info-card {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 3rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.user-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.info-grid {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.artist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.artist-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.artist-card:hover {
+    transform: scale(1.02);
+}
+
+.artist-card-image {
+    position: relative;
+    height: 180px;
+}
+
+.artist-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.artist-card-content {
+    padding: 1.2rem;
+    text-align: center;
+}
+
+.artist-card-content h3 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.genre-tag {
+    display: inline-block;
+    padding: 2px 10px;
+    background: #f0f0f0;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.btn-manage {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: transparent;
+    border: 2px solid #1a1a1a;
+    color: #1a1a1a;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-manage:hover {
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+.btn-primary-small {
+    background: #1a1a1a;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.btn-settings {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    color: #333;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-settings:hover {
+    background: #eee;
+    border-color: #bbb;
+}
+
+.icon-small {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+.manage-container {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.manage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #f4f4f4;
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.manage-header h1 span {
+    color: #e63946;
+}
+
+.subtitle {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.manage-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.manage-table th {
+    text-align: left;
+    background: #fafafa;
+    padding: 12px 15px;
+    color: #666;
+    font-weight: 600;
+    border-bottom: 2px solid #eee;
+}
+
+.manage-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+.manage-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.actions-cell {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn-icon-edit, .btn-icon-delete {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-icon-edit:hover {
+    background: #e3f2fd;
+    border-color: #2196f3;
+}
+
+.btn-icon-delete:hover {
+    background: #ffebee;
+    border-color: #f44336;
+}
+
+.btn-outline {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    color: #666;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+}
+
+.btn-outline:hover {
+    background: #f4f4f4;
+}
+
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+}
+
+.form-header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-row-dual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 2rem;
+}
+
+.btn-link {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.btn-link:hover {
+    text-decoration: underline;
+}
+
+.form-group ul {
+    list-style: none;
+    color: #e63946;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    padding: 0;
+}
+
+.landing-basic {
+    height: 85vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.landing-content {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 3rem;
+    border-radius: 15px;
+    text-align: center;
+    color: white;
+    max-width: 600px;
+}
+
+.landing-content h1 {
+    font-size: 4rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.landing-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #ddd;
+}
+
+.btn-enter {
+    background-color: #e63946;
+    color: white;
+    padding: 15px 40px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-enter:hover {
+    background-color: #c92a35;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin: 3rem 0;
+}
+
+.pagination-container > div,
+.pagination-container ul {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination-container a,
+.pagination-container span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    color: #333;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+}
+
+.pagination-container a:hover {
+    background-color: #f8f9fa;
+    border-color: #bbb;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.pagination-container .current {
+    background-color: #e63946;
+    color: white;
+    border-color: #e63946;
+    cursor: default;
+    pointer-events: none;
+}
+
+.pagination-container .previous,
+.pagination-container .next {
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.pagination-container span:not(.current) {
+    color: #999;
+    border-color: #eee;
+    background-color: #fafafa;
+}
+
+.main-footer {
+    background-color: #111;
+    color: #bbb;
+    padding: 3rem 0 2rem;
+    margin-top: auto;
+    border-top: 4px solid #e63946;
+    font-size: 0.9rem;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 250px;
+}
+
+.footer-column h3,
+.footer-column h4 {
+    color: #fff;
+    margin-bottom: 1.2rem;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.footer-info h3 {
+    color: #e63946;
+    font-size: 1.3rem;
+}
+
+.footer-info p {
+    line-height: 1.6;
+    max-width: 300px;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #bbb;
+    transition: color 0.3s, padding-left 0.3s;
+}
+
+.footer-links a:hover {
+    color: #fff;
+    padding-left: 5px;
+}
+
+.developer-credit {
+    margin-bottom: 1rem;
+    color: #888;
+}
+
+.developer-credit strong {
+    color: #fff;
+}
+
+.copyright {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    opacity: 0.5;
+    border-top: 1px solid #333;
+    padding-top: 1rem;
+}
+
+@media (max-width: 900px) {
+    .concert-detail-container {
+        flex-direction: column;
+    }
+    .artist-sidebar {
+        width: 100%;
+        position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-info p {
+        margin: 0 auto;
+    }
+
+    .copyright {
+        border-top: none;
+    }
 }
