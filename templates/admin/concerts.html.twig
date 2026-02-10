@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin - Gestion des Concerts{% endblock %}
+
+{% block body %}
+    <div class="manage-container">
+        {# En-tête de la page #}
+        <div class="manage-header">
+            <div>
+                <h1>Tous les Concerts</h1>
+                <p class="subtitle">{{ concerts|length }} événements programmés</p>
+            </div>
+            <a href="{{ path('app_admin_dashboard') }}" class="btn-outline">Retour au Dashboard</a>
+        </div>
+
+        {# Tableau des données #}
+        <div class="table-responsive">
+            <table class="manage-table">
+                <thead>
+                <tr>
+                    <th>Affiche</th>
+                    <th>Événement</th>
+                    <th>Artiste</th>
+                    <th>Date & Heure</th>
+                    <th>Lieu</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for concert in concerts %}
+                    <tr>
+                        {# Colonne Image #}
+                        <td>
+                            <img src="{{ asset('uploads/concert/' ~ concert.image) }}"
+                                 alt="Affiche"
+                                 style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        </td>
+
+                        {# Colonne Titre #}
+                        <td><strong>{{ concert.title }}</strong></td>
+
+                        <td>
+                            {{ concert.artist.name }}
+                            <br>
+                            <span style="font-size: 0.8rem; color: #888;">{{ concert.artist.genre }}</span>
+                        </td>
+
+                        <td>{{ concert.date|date('d/m/Y à H:i') }}</td>
+
+                        <td>{{ concert.lieu }}</td>
+
+                        <td class="text-right actions-cell">
+                            <form method="post" action="{{ path('app_admin_entity_delete', {type: 'concert', id: concert.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce concert ?\nCette action est irréversible.');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ concert.id) }}">
+                                <button class="btn-icon-delete" title="Supprimer définitivement">supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 2rem; color: #888;">
+                            Aucun concert n'a été programmé pour le moment.
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

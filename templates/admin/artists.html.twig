@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin - Artistes{% endblock %}
+
+{% block body %}
+    <div class="manage-container">
+        <div class="manage-header">
+            <h1>Tous les Artistes</h1>
+            <a href="{{ path('app_admin_dashboard') }}" class="btn-outline">Retour Dashboard</a>
+        </div>
+
+        <table class="manage-table">
+            <thead>
+            <tr>
+                <th>Image</th>
+                <th>Nom</th>
+                <th>Genre</th>
+                <th>Propriétaire</th>
+                <th class="text-right">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for artist in artists %}
+                <tr>
+                    <td>
+                        <img src="{{ asset('uploads/artist/' ~ artist.image) }}" alt="img" style="width:40px; height:40px; object-fit:cover; border-radius:4px;">
+                    </td>
+                    <td>{{ artist.name }}</td>
+                    <td><span class="genre-tag">{{ artist.genre }}</span></td>
+                    <td>{{ artist.owner.username }}</td>
+                    <td class="text-right">
+                        <form method="post" action="{{ path('app_admin_entity_delete', {type: 'artist', id: artist.id}) }}" onsubmit="return confirm('Supprimer cet artiste et ses concerts ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ artist.id) }}">
+                            <button class="btn-icon-delete">supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

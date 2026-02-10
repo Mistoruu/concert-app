@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ concert.title }} - LiveConcert{% endblock %}
+
+{% block body %}
+    <div class="concert-detail-container">
+        <div class="concert-main">
+            <div class="concert-hero">
+                <img src="{{ asset('uploads/concert/' ~ concert.image) }}" alt="{{ concert.title }}" class="main-poster">
+                <div class="concert-header-info">
+                    <span class="genre-tag">{{ concert.artist.genre }}</span>
+                    <h1>{{ concert.title }}</h1>
+                    <p class="concert-meta">📍 {{ concert.lieu }} | 📅 {{ concert.date|date('d/m/Y à H:i') }}</p>
+                </div>
+            </div>
+
+            <div class="concert-description">
+                <h3>À propos de l'événement</h3>
+                <p>{{ concert.description|nl2br }}</p>
+            </div>
+        </div>
+
+        <aside class="artist-sidebar">
+            <div class="artist-card-mini">
+                <div class="artist-photo-container">
+                    <img src="{{ asset('uploads/artist/' ~ concert.artist.image) }}" alt="{{ concert.artist.name }}" class="artist-photo">
+                </div>
+                <div class="artist-details">
+                    <h4>{{ concert.artist.name }}</h4>
+                    <p class="artist-bio-short">{{ concert.artist.biography|slice(0, 150) }}...</p>
+                    <a href="{{ path('app_concert_index', {'artist': concert.artist.name}) }}" class="btn-outline">
+                        Voir tous ses concerts
+                    </a>
+                </div>
+            </div>
+
+            <div class="booking-zone">
+                <button class="btn-disabled" disabled title="Fonctionnalité bientôt disponible">
+                    Réservation indisponible
+                </button>
+                <p class="coming-soon-text">La billetterie en ligne ouvrira prochainement.</p>
+
+                <a href="{{ path('app_home') }}" class="back-link">← Retour à la liste</a>
+            </div>
+        </aside>
+    </div>
+{% endblock %}

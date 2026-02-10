@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil - LiveConcert{% endblock %}
+
+{% block body %}
+    <div class="profile-dashboard">
+        <header class="dashboard-header">
+            <h1>Tableau de bord de <span>{{ user.username }}</span></h1>
+        </header>
+
+        <section class="user-info-card">
+            <div class="user-info-header">
+                <h2>Mes informations</h2>
+                <a href="{{ path('app_profile_edit') }}" class="btn-settings">
+                    <img src="{{ asset('uploads/icons/edit.png') }}" alt="Modifier" class="icon-small" style="width: 24px;">
+                    Paramètres du compte
+                </a>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-item"><strong>Email :</strong> {{ user.email }}</div>
+                <div class="info-item"><strong>Utilisateur :</strong> {{ user.username }}</div>
+            </div>
+        </section>
+
+        <section class="user-artists">
+            <div class="section-header">
+                <h2>Mes Pages Artistes</h2>
+                <a href="{{ path('app_artist_new') }}" class="btn-primary-small">+ Nouvel artiste</a>
+            </div>
+
+            {% if user.artists is empty %}
+                <div class="empty-state">
+                    <p>Vous n'avez pas encore créé de page artiste.</p>
+                    <a href="{{ path('app_artist_new') }}">Commencer maintenant</a>
+                </div>
+            {% else %}
+                <div class="artist-grid">
+                    {% for artist in user.artists %}
+                        <article class="artist-card">
+                            <div class="artist-card-image">
+                                <img src="{{ asset('uploads/artist/' ~ artist.image) }}" alt="{{ artist.name }}">
+                                <div class="genre-badge">{{ artist.genre }}</div>
+                            </div>
+                            <div class="artist-card-content">
+                                <h3>{{ artist.name }}</h3>
+                                <div class="card-actions">
+                                    <a href="{{ path('app_artist_manage', {id: artist.id}) }}" class="btn-manage">Gérer l'artiste</a>
+                                </div>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </section>
+    </div>
+{% endblock %}

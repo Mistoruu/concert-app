@@ -1,0 +1,24 @@
+<footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-column footer-info">
+            <h3>🎸 LiveConcert</h3>
+            <p>La plateforme de référence pour découvrir, réserver et organiser vos concerts préférés.</p>
+        </div>
+
+        <div class="footer-column footer-links">
+            <h4>Liens Rapides</h4>
+            <ul>
+                <li><a href="{{ path('app_home') }}">Accueil</a></li>
+                <li><a href="{{ path('app_concert_index') }}">Tous les concerts</a></li>
+                {% if not app.user %}
+                    <li><a href="{{ path('app_login') }}">Espace Membre</a></li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <div class="footer-column footer-copy">
+            <h4>À propos</h4>
+            <span class="copyright">&copy; {{ "now"|date("Y") }} LiveConcert</span>
+        </div>
+    </div>
+</footer>

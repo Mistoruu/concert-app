@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Programmer un concert{% endblock %}
+
+{% block body %}
+    <div class="form-wrapper">
+        <div class="form-container">
+            <header class="form-header">
+                <h1>Nouveau Concert</h1>
+                <p>Pour l'artiste : <strong>{{ artist.name }}</strong></p>
+            </header>
+
+            {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_label(form.title, 'Nom de la tournée / titre') }}
+                {{ form_widget(form.title) }}
+                {{ form_errors(form.title) }}
+            </div>
+
+            <div class="form-row-dual">
+                <div class="form-group">
+                    {{ form_label(form.date, 'Date et Heure') }}
+                    {{ form_widget(form.date) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.lieu, 'Ville / Salle') }}
+                    {{ form_widget(form.lieu) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.description, 'Description de l\'événement') }}
+                {{ form_widget(form.description, {'attr': {'rows': '5'}}) }}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Publier le concert</button>
+                <a href="{{ path('app_artist_manage', {id: artist.id}) }}" class="btn-link">Annuler</a>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

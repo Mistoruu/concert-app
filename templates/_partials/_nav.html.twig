@@ -1,0 +1,26 @@
+<header class="site-header">
+    <nav class="main-nav">
+        <div class="nav-logo">
+            <a href="{{ path('app_home') }}">
+                <span class="logo-icon">🎸</span> <strong>LiveConcert</strong>
+            </a>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="{{ path('app_concert_index') }}" class="nav-link">Concerts</a></li>
+
+            {% if app.user %}
+                <li><a href="{{ path('app_profile') }}" class="nav-link">Mon Profil</a></li>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="{{ path('app_admin_dashboard') }}" class="nav-link admin-tag">Admin</a></li>
+                {% endif %}
+
+                <li><a href="{{ path('app_logout') }}" class="logout-link">Déconnexion</a></li>
+            {% else %}
+                <li><a href="{{ path('app_login') }}" class="nav-link">Connexion</a></li>
+                <li><a href="{{ path('app_register') }}" class="btn-register">Inscription</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>

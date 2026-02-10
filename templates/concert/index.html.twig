@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prochains Concerts{% endblock %}
+
+{% block body %}
+    <header class="page-header">
+        <h1>Prochains Concerts</h1>
+        <p>Découvrez les meilleurs événements musicaux du moment.</p>
+    </header>
+
+    <section class="filter-section">
+        <form method="get" action="{{ path('app_concert_index') }}" class="filter-form">
+
+            <div class="filter-group">
+                <input type="text"
+                       name="artist"
+                       placeholder="Rechercher un artiste..."
+                       value="{{ app.request.query.get('artist') }}"
+                       class="filter-input">
+            </div>
+
+            <div class="filter-group">
+                <select name="genre" class="filter-select">
+                    <option value="">Tous les genres</option>
+                    {% set genres = ['Rock', 'Pop', 'Techno', 'Rap', 'Classique'] %}
+                    {% for genre in genres %}
+                        <option value="{{ genre }}" {{ app.request.query.get('genre') == genre ? 'selected' : '' }}>
+                            {{ genre }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            {# Boutons d'action #}
+            <button type="submit" class="btn-filter"> Filtrer</button>
+
+            {% if app.request.query.get('artist') or app.request.query.get('genre') %}
+                <a href="{{ path('app_concert_index') }}" class="btn-reset">✖ Réinitialiser</a>
+            {% endif %}
+        </form>
+    </section>
+
+    <div class="concert-grid">
+        {% for concert in pagination %}
+            <article class="concert-card">
+                <div class="card-image">
+                    {% if concert.image %}
+                        <img src="{{ asset('uploads/concert/' ~ concert.image) }}" alt="{{ concert.title }}">
+                    {% else %}
+                        <img src="https://via.placeholder.com/400x300?text=Live+Concert" alt="Live Concert">
+                    {% endif %}
+                    <div class="genre-badge">{{ concert.artist.genre }}</div>
+                </div>
+
+                <div class="card-content">
+                    <p class="artist-name">{{ concert.artist.name }}</p>
+                    <h2 class="concert-title">{{ concert.title }}</h2>
+
+                    <div class="concert-info">
+                        <span>📍 {{ concert.lieu }}</span>
+                        <span>📅 {{ concert.date|date('d/m/Y') }}</span>
+                    </div>
+
+                    <a href="{{ path('app_concert_show', {id: concert.id}) }}" class="btn-card">Voir l'événement</a>
+                </div>
+            </article>
+        {% else %}
+            {# Message si aucun résultat #}
+            <div class="no-results">
+                <p>😕 Aucun concert ne correspond à votre recherche.</p>
+                <a href="{{ path('app_concert_index') }}" class="btn-outline">Voir tout l'agenda</a>
+            </div>
+        {% endfor %}
+    </div>
+
+    {# --- PAGINATION --- #}
+    <div class="pagination-container">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+        <style>
+        .filter-section {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .filter-form {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .filter-input, .filter-select {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            min-width: 200px;
+        }
+
+        .btn-filter {
+            background-color: #1a1a1a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn-filter:hover { background-color: #333; }
+
+        .btn-reset {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-bottom: 1px dashed #666;
+        }
+
+        .btn-reset:hover { color: #e63946; border-color: #e63946; }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem;
+            background: #f9f9f9;
+            border-radius: 12px;
+            color: #666;
+            font-size: 1.2rem;
+        }
+    </style>
+{% endblock %}

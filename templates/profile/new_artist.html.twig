@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer ma page Artiste{% endblock %}
+
+{% block body %}
+    <section class="form-container">
+        <h1>Créer une nouvelle page Artiste</h1>
+        <p>En tant que {{ app.user.username }}, vous pouvez gérer plusieurs entités artistiques.</p>
+
+        {{ form_start(form, {'attr': {'class': 'custom-form'}}) }}
+
+        <div class="form-group">
+            {{ form_row(form.name, {
+                'label': 'Nom de l\'artiste/groupe',
+                'attr': {'placeholder': 'Ex: Pierre & The Guitars'}
+            }) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_row(form.genre, {
+                'label': 'Style de musique',
+                'attr': {'placeholder': 'Ex: Rock, Jazz, Electro...'}
+            }) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_row(form.biography, {
+                'label': 'Biographie',
+                'attr': {'rows': '5'}
+            }) }}
+        </div>
+
+        <button type="submit" class="btn-primary">Créer la page</button>
+
+        {{ form_end(form) }}
+
+        <a href="{{ path('app_home') }}" class="back-link">Retour à l'accueil</a>
+    </section>
+{% endblock %}

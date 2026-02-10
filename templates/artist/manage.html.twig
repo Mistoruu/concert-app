@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gérer {{ artist.name }}{% endblock %}
+
+{% block body %}
+    <div class="manage-container">
+        <div class="manage-header">
+            <div>
+                <h1>Gestion de l'artiste : <span>{{ artist.name }}</span></h1>
+                <p class="subtitle">Style : {{ artist.genre }}</p>
+            </div>
+            <div class="header-actions">
+                <a href="{{ path('app_concert_new', {id: artist.id}) }}" class="btn-primary">➕ Ajouter un concert</a>
+                <a href="{{ path('app_profile') }}" class="btn-outline">Retour au profil</a>
+            </div>
+        </div>
+
+        <section class="concerts-section">
+            <h2>Concerts programmés</h2>
+
+            {% if concerts is empty %}
+                <div class="empty-state">
+                    <p>Aucun concert n'est prévu pour le moment.</p>
+                </div>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="manage-table">
+                        <thead>
+                        <tr>
+                            <th>Événement</th>
+                            <th>Date & Heure</th>
+                            <th>Lieu</th>
+                            <th class="text-right">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for concert in concerts %}
+                            <tr>
+                                <td><strong>{{ concert.title }}</strong></td>
+                                <td>{{ concert.date|date('d/m/Y H:i') }}</td>
+                                <td>{{ concert.lieu }}</td>
+                                <td class="text-right actions-cell">
+                                    <a href="{{ path('app_concert_edit', {id: concert.id}) }}" class="btn-icon-action" title="Modifier">
+                                        <img src="{{ asset('uploads/icons/edit.png') }}" alt="Editer" class="icon-img" style="width: 24px;">
+                                    </a>
+
+                                    <form method="post" action="{{ path('app_concert_delete', {id: concert.id}) }}" onsubmit="return confirm('Supprimer ce concert ?');" style="display:inline-block">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ concert.id) }}">
+                                        <button type="submit" class="btn-icon-action" title="Supprimer">
+                                            <img src="{{ asset('uploads/icons/delete.png') }}" alt="Supprimer" class="icon-img" style="width: 24px;">
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </section>
+    </div>
+{% endblock %}

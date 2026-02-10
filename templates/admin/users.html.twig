@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin - Utilisateurs{% endblock %}
+
+{% block body %}
+    <div class="manage-container">
+        <div class="manage-header">
+            <h1>Gestion des Utilisateurs</h1>
+            <a href="{{ path('app_admin_dashboard') }}" class="btn-outline">Retour Dashboard</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="manage-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Pseudo</th>
+                    <th>Email</th>
+                    <th>Rôle</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>#{{ user.id }}</td>
+                        <td><strong>{{ user.username }}</strong></td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            {% if 'ROLE_ADMIN' in user.roles %}
+                                <span class="admin-tag">ADMIN</span>
+                            {% else %}
+                                <span style="color:#666">Membre</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-right actions-cell">
+                            <form method="post" action="{{ path('app_admin_user_toggle_role', {id: user.id}) }}">
+                                <button type="submit" class="btn-primary-small" style="font-size:0.7rem;">
+                                    {% if 'ROLE_ADMIN' in user.roles %} Retrograder{% else %} Promouvoir{% endif %}
+                                </button>
+                            </form>
+
+                            <form method="post" action="{{ path('app_admin_user_delete', {id: user.id}) }}"
+                                  onsubmit="return confirm(' ATTENTION !\n\nLa suppression de cet utilisateur entraînera la suppression définitive de :\n- Tous ses ARTISTES\n- Tous les CONCERTS associés\n\nCette action est irréversible.\nÊtes-vous sûr de vouloir continuer ?');">
+
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                                <button class="btn-icon-delete" title="Supprimer tout le contenu de cet utilisateur">supprimer</button>
+
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

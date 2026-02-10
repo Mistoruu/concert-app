@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LiveConcert{% endblock %}
+
+{% block body %}
+    <div class="landing-basic" style="background-image: url('{{ asset('uploads/concert/rock.jpg') }}');">
+        <div class="landing-content">
+            <h1>LiveConcert</h1>
+            <p>Tous vos événements musicaux au même endroit.</p>
+            <a href="{{ path('app_concert_index') }}" class="btn-enter">Entrer sur le site</a>
+        </div>
+    </div>
+{% endblock %}
